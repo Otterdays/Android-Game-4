@@ -1,0 +1,29 @@
+# Godot 4 — editor-local (regenerated)
+.godot/
+
+# Legacy import cache
+.import/
+
+# Export credentials (never commit)
+export_credentials.cfg
+
+# Android signing / machine-local
+*.keystore
+*.jks
+local.properties
+
+# Export binaries
+bin/
+*.apk
+*.aab
+
+# Gradle — outputs only (keep android/build/*.gradle and wrapper)
+android/build/.gradle/
+android/build/build/
+
+# OS / IDE noise
+.DS_Store
+Thumbs.db
+*.tmp
+.vscode/
+.idea/

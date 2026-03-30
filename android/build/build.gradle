@@ -1,0 +1,40 @@
+// [TRACE: ARCHITECTURE.md]
+// Godot Android Custom Build Template (Minimal Gradle Setup)
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.5.0' // Matching Godot 4.3 requirements
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'com.android.application'
+
+android {
+    namespace "com.example.gdscriptandroid"
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.example.gdscriptandroid"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+}
