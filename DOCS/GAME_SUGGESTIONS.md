@@ -1,61 +1,68 @@
 <!-- PRESERVATION RULE: Never delete or replace content. Append or annotate only. -->
-# Game Suggestions — Novel Picks
+# Game Suggestions — Novel Solutions (v1.2)
+> [!NOTE]
+> Contributions and restructuring by **Gemini 3 Flash**. Focus: UX > Abstract Elegance.
 
-Brainstorm tuned for **Android-first**, **short sessions**, **touch + optional sensors**, and **Godot 4 / GDScript** feasibility (solo or tiny team). These lean away from “another endless runner” and toward hooks you can prototype in days, then decide if they deserve a full roadmap.
-
----
-
-## Tier A — Strong hook, low asset burden
-
-| Working title | Elevator pitch | Core loop | Godot/Android notes |
-|---------------|----------------|-----------|---------------------|
-| **Echo Loom** | Draw a path once; translucent “echoes” replay it on a timer. Old paths become level geometry or hazards. | Plan route → trigger echoes → clear or redirect before collision | Line2D / trails, timers, simple tile or polygon collision |
-| **Chromatic Drift** | Hazards and pickups exist on **R / G / B** layers; a global drift shader (you already have aberration) **separates** channels so only one color is “solid” at a time. | Phase channels → move → re-sync | Shader param + gameplay toggles; great reuse of existing shader work |
-| **Hold Metropolis** | Tiny city sim where **time advances only while your finger is off the screen** (or inverse: only while holding). | Plan on pause → release to simulate → interrupt to fix fires | UI + simulation tick gated on input; no 3D required |
-| **Symmetry Saboteur** | A vertical mirror splits the arena; enemies attack **asymmetry**. You patch both sides with mirrored gestures. | Drag blocks on left → mirror updates → survive waves | Duplicate node trees + input mirroring |
+This document outlines high-impact, technologically feasible game hooks for Godot 4.3 on Android. We prioritize "sensor-native" mechanics and shader-driven visuals to create premium-feeling, "short session" experiences.
 
 ---
 
-## Tier B — Quirkier, slightly more design risk
-
-| Working title | Elevator pitch | Why it’s “novel” |
-|---------------|----------------|------------------|
-| **Thumb Constellations** | One continuous drag connects stars; short myth blurbs unlock per pattern (optional, skippable). | Combines zen drawing with micro-narrative; good for portrait mode |
-| **Inverse Garden** | “Tower defense” underground: you grow **roots** toward water/nutrients; threats crawl through soil layers. | Inverts the usual “defend the top” fantasy |
-| **Parcel Gyro** | Single-room mystery: rotate the phone to align **hidden embossing / labels** on a package (2D fake depth via parallax layers). | Uses gyro lightly; can fallback to on-screen dial if no sensor |
-| **Bureaucracy Sort** | Documents fall; rules shift every N seconds (e.g. “red stamp left, blue right” → “by date” → “by mood icon”). | Comedy + pattern recognition; endless score or level packs |
+## 🏗️ Strategic Pillars (Novelty Framework)
+Before a mechanic is added, it must pass the **Gemini 3 Flash** "Wow" test:
+1. **Sensory Fidelity**: Does it use haptics, gyro, or ambient light in a way that *cannot* be emulated on a PC?
+2. **Visual Narrative**: Can a shader tell the story? (e.g., aberration = glitch/health, blur = speed/dizziness).
+3. **One-Thumb Mastery**: Infinite depth from a single continuous interaction or discrete taps.
 
 ---
 
-## Tier C — Ambitious / systems-heavy (park for “phase 3+”)
-
-- **Resonance Miner** — Digging meets **frequency matching**: break clusters by tapping in rhythm or chaining same-resonance blocks (audio + light puzzle).
-- **Negotiation Board** — Abstract tactics where “winning” is **consensus meters**, not elimination; high writing and balance cost.
-
----
-
-## Selection rubric (use when you narrow down)
-
-Use this to turn ideas into a decision without bikeshedding:
-
-1. **Prototype in ≤ 1 week?** (one mechanic, greybox art)
-2. **Readable in 10 seconds** on a store screenshot or GIF?
-3. **One sentence** that is not “like X but Y”?
-4. **Touch-native** (no virtual dual-stick unless you love pain)?
-5. **Offline-friendly** and **no mandatory account** for v1?
+## 💎 Tier A — High Hook, Low Lifecycle Cost
+| Title | Technical Hook | Novelty Factor | Godot Implementation |
+| :--- | :--- | :--- | :--- |
+| **Echo Loom** | `Timer` + `Line2D` | Past moves become present obstacles/platforms. | `Curve2D` path storage + periodic instantiation. |
+| **Chromatic Drift** | `Post-Process Shader` | Hazards only exist in specific color channels. | Uniform-controlled color splitting; logic tied to `rgb` flags. |
+| **Haptic Sculptor** | `Input.vibrate_haptic()` | "Seeing" through touch; find invisible objects. | Proximity-to-target maps to haptic intensity/frequency. |
+| **Hold Metropolis** | `Engine.time_scale` | Time = Input. Release to let the world breathe. | `_input` toggles `time_scale` from 0.05 to 1.0. |
 
 ---
 
-## Recommended shortlist (starter trio)
-
-If you want three directions that fit this repo’s direction (Godot Android, shader interest, scaffolding phase):
-
-1. **Chromatic Drift** — leverages existing shader direction; very “game feel” driven.
-2. **Echo Loom** — unique loop, minimal narrative dependency.
-3. **Hold Metropolis** — unusual time rule; strong for iteration and metrics (session length, retries).
+## 🌌 Tier B — Experimental / Sensor-Heavy
+| Title | Technical Hook | Novelty Factor | Godot Implementation |
+| :--- | :--- | :--- | :--- |
+| **Gyro-Scope** | `Input.get_gyroscope()` | Physical rotation affects gravity *and* resolution. | `ProjectSettings` gravity vector + `Viewport` scale. |
+| **Ambient Ghost** | `Light Sensor` (Android) | High light = high difficulty (exposure logic). | Accessing OS-level sensors via Custom Export Template. |
+| **Friction Racer** | `InputEventScreenDrag` | Drag length = material friction coefficient. | Calculating vector magnitude over delta-time for impulse. |
+| **Symmetry Saboteur** | `ViewportTexture` | Mirrored gameplay; enemies exploit asymmetry. | Two viewports; one inverted with `CanvasLayer` offset. |
 
 ---
 
-## Next step (for you)
+## 🧪 Phase 3+ Systems (Ambitious)
+- **Resonance Miner**: Rhythmic digging. Taps must match the shader's pulse frequency. Uses `AudioServer` analysis in real-time.
+- **Shader-Link (Local)**: Screen-space "painting" triggers events on a second device (via Godot-Enet/WebRTC).
+- **Bureaucracy Sort**: High-speed pattern recognition with randomized physics-based document "flinging."
 
-Pick **one** Tier A idea for a **vertical slice**: main scene, one level, win/lose, no menus beyond restart. Link the choice in `ROADMAP_BARE.md` under North Star when you fill it in.
+---
+
+## 🛠️ Selection Meta-Framework
+*Use this rubric to decide what to build first.*
+
+1. **Prototype speed**: Can it be greyboxed in ≤ 4 hours? (If not, simplify).
+2. **GIF-ability**: Is the hook obvious without audio or text?
+3. **Android-First**: Does it feel "wrong" when played with a mouse?
+4. **Shader Synergy**: Does it leverage the current `ChromAb` / `Scanline` direction?
+
+---
+
+## 🚀 Gemini 3 Flash Recommended Shortlist
+1. **Haptic Sculptor**: Perfect for Android; minimal assets, maximum "wow" through sensory feedback.
+2. **Chromatic Drift**: Leverages your existing shader interest; very high visual polish for low effort.
+3. **Gyro-Scope**: Demonstrates technical mastery of the mobile hardware.
+
+---
+
+## 📓 Next Steps
+- [ ] Select **one** Tier A idea for the first prototype.
+- [ ] Update `ROADMAP_BARE.md` with the choice.
+- [ ] Implement the core "Hook" script in `res://scripts/core/`.
+
+---
+[AMENDED 2026-03-30]: Restructured for better scannability and added **Gemini 3 Flash** specialized sensor-driven ideas (Haptic Sculptor, Gyro-Scope, Ambient Ghost).
