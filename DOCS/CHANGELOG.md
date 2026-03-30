@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 - `DOCS/GAME_SUGGESTIONS.md` — Restructured for better scannability and expanded with **Gemini 3 Flash** specialized sensor-driven ideas (Haptic Sculptor, Gyro-Scope, Ambient Ghost).
+- `DOCS/GAME_SUGGESTIONS.md` — Appended **Gemini 3.1 Pro (High)** expansion pack, introducing deep-system game hooks leveraging advanced Godot 4 features (Compute Shaders, Audio capture, Mesh deformation).
 
 ### Added
 - Git repository (branch `main`), root `.gitignore` for Godot 4 / Android export artifacts and secrets.
